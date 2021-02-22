@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    // "outDir": "dist",
+    "sourceMap": true
+  },
+  "include": ["src", "./server.ts"],
+  "exclude": ["node_modules", "dist"],
+  "extends": "@tsconfig/recommended/tsconfig.json"
+}

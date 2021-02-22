@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./dist/face-api.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      canvas {
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="video" width="720" height="560" autoplay muted></video>
+    <script>
+      const video = document.getElementById('video')
+      Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+        faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
+        faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+        faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+      ]).then((res) => startVideo())
+
+      function startVideo() {
+        navigator.getUserMedia(
+          { video: {} },
+          (stream) => (video.srcObject = stream),
+          (err) => console.error(err)
+        )
+      }
+
+      video.addEventListener('play', async () => {
+        const canvas = faceapi.createCanvasFromMedia(video)
+        document.body.append(canvas)
+        const displaySize = { width: video.width, height: video.height }
+        faceapi.matchDimensions(canvas, displaySize)
+        const image = await faceapi.fetchImage('/images/rsz_jimmy.jpg')
+        const image2 = await faceapi.fetchImage('/images/not_jimmy.jpg')
+        // const image3 = await faceapi.fetchImage('/images/jimmy3.jpg')
+
+        const fullFaceDescription = await faceapi
+          .detectSingleFace(image)
+          .withFaceLandmarks()
+          .withFaceDescriptor()
+        const labeledDescriptors = [
+          new faceapi.LabeledFaceDescriptors('Jimmy 1', [fullFaceDescription.descriptor]),
+        ]
+
+        const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors)
+        setInterval(async () => {
+          const detections = await faceapi
+            .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks()
+            .withFaceDescriptor()
+          // .withFaceDescriptor()
+
+          if (detections) {
+            const bestMatch = faceMatcher.findBestMatch(detections.descriptor)
+            console.log(bestMatch.toString())
+          }
+          const resizedDetections = faceapi.resizeResults(detections, displaySize)
+          canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+          faceapi.draw.drawDetections(canvas, resizedDetections)
+        }, 100)
+      })
+    </script>
+  </body>
+</html>
