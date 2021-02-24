@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-    <script src="./dist/face-api.js"></script>
+    <script src="/assets/dist/face-api.js"></script>
     <style>
       body {
         margin: 0;
@@ -40,23 +40,36 @@
           (err) => console.error(err)
         )
       }
-
+      getImagesData = async (id) => {
+        const response = await fetch(`/api/scan/${id}`)
+        return await response.json()
+      }
       video.addEventListener('play', async () => {
         const canvas = faceapi.createCanvasFromMedia(video)
         document.body.append(canvas)
         const displaySize = { width: video.width, height: video.height }
         faceapi.matchDimensions(canvas, displaySize)
-        const image = await faceapi.fetchImage('/images/rsz_jimmy.jpg')
-        const image2 = await faceapi.fetchImage('/images/not_jimmy.jpg')
-        // const image3 = await faceapi.fetchImage('/images/jimmy3.jpg')
+        const params = window.location.href.split('/')
+        const id = params[params.length - 1]
+        const imagesData = await getImagesData(id)
+        await console.log(imagesData)
 
-        const fullFaceDescription = await faceapi
-          .detectSingleFace(image)
-          .withFaceLandmarks()
-          .withFaceDescriptor()
-        const labeledDescriptors = [
-          new faceapi.LabeledFaceDescriptors('Jimmy 1', [fullFaceDescription.descriptor]),
-        ]
+        let images = []
+        let labeledDescriptors = []
+
+        for (let i = 0; i < imagesData.length; i++) {
+          images[i] = await faceapi.fetchImage(`/${id}/${imagesData[i]['fileName']}`)
+          const fullFaceDescription = await faceapi
+            .detectSingleFace(images[i])
+            .withFaceLandmarks()
+            .withFaceDescriptor()
+          console.log(fullFaceDescription)
+          labeledDescriptors.push(
+            new faceapi.LabeledFaceDescriptors(imagesData[i]['label'], [
+              fullFaceDescription.descriptor,
+            ])
+          )
+        }
 
         const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors)
         setInterval(async () => {

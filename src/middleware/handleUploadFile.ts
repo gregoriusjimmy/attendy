@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import multer from 'multer'
 import path from 'path'
 import fs from 'fs'
@@ -8,7 +8,6 @@ const UPLOAD_FOLDER = 'uploads'
 export const uploadHandler = (req: Request, res: Response) => {
   const newDirName = getNewDirName()
   generateNewDir(newDirName)
-
   const storage = multer.diskStorage({
     destination: (req, file, callback) => {
       callback(null, 'uploads/' + newDirName)
@@ -31,11 +30,14 @@ export const uploadHandler = (req: Request, res: Response) => {
     let result = 'You have uploaded these images: <hr />'
     const files = req.files
     console.log(files)
+    console.log(newDirName, 'ada')
   })
+  // TO DO : HANDLE ERROR
+  return newDirName
 }
-const getNewDirName = () => Date.now().toString()
+export const getNewDirName = () => Date.now().toString()
 
-const generateNewDir = (dirName: string) => {
+export const generateNewDir = (dirName: string) => {
   fs.mkdirSync(path.join(__dirname, '..', '..', UPLOAD_FOLDER, dirName))
 }
 
