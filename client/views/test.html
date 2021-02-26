@@ -57,16 +57,10 @@
         let images = []
         let labeledDescriptors = []
 
-        for (let i = 0; i < imagesData.length; i++) {
-          images[i] = await faceapi.fetchImage(`/${id}/${imagesData[i]['fileName']}`)
-          const fullFaceDescription = await faceapi
-            .detectSingleFace(images[i])
-            .withFaceLandmarks()
-            .withFaceDescriptor()
-          console.log(fullFaceDescription)
+        for (const imageData of imagesData) {
           labeledDescriptors.push(
-            new faceapi.LabeledFaceDescriptors(imagesData[i]['label'], [
-              fullFaceDescription.descriptor,
+            new faceapi.LabeledFaceDescriptors(imageData.label, [
+              new Float32Array(imageData.descriptor),
             ])
           )
         }

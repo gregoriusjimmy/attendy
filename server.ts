@@ -11,6 +11,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use(express.static(path.join(__dirname, 'client')))
+app.use('/models', express.static(path.join(__dirname, 'models')))
 
 app.get('/', (req, res) => res.sendFile(path.join(VIEWS_DIR, 'index.html')))
 
@@ -18,7 +19,6 @@ app.get('/api/scan/:dirName', (req, res) => {
   const dirName = req.params['dirName']
   const pathToDir = path.join(__dirname, 'uploads', dirName)
   generateUploadedImagesData(pathToDir).then((data) => {
-    console.log(data)
     // TO DO : Handle data
     res.json(data)
   })
