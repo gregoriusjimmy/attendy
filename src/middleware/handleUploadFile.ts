@@ -9,7 +9,7 @@ export const uploadHandler = (req: Request, res: Response) => {
   let newDirName = getNewDirName()
   generateNewDir(newDirName)
   const storage = generateStorage(newDirName)
-  const upload = multer({ storage: storage, fileFilter: imageFilter }).array('multiple_images', 20)
+  const upload = multer({ storage: storage, fileFilter: imageFilter }).array('fileUpload', 20)
 
   upload(req, res, (err: any) => {
     if (err instanceof multer.MulterError) {
@@ -40,7 +40,7 @@ const generateStorage = (newDirName: string): multer.StorageEngine => {
     destination: (req, file, callback) => {
       callback(null, 'uploads/' + newDirName)
     },
-    // By default, multer removes file extensions so let's add them back
+
     filename: (req, file, callback) => {
       callback(null, file.originalname)
     },

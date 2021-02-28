@@ -9,11 +9,11 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <!-- <link rel="stylesheet" href="assets/css/index.style.css" /> -->
+    <link rel="stylesheet" href="assets/css/index.style.css" />
     <title>Home</title>
   </head>
   <body>
-    <section class="hero-section">
+    <!-- <section class="hero-section">
       <img src="/assets/images/attendy-logo2x.png" width="134px" alt="attendy-logo" />
       <div class=""></div>
     </section>
@@ -25,6 +25,32 @@
       <div>
         <input type="submit" name="btn_upload_multiple_images" value="Upload" />
       </div>
+    </form> -->
+
+    <!-- Upload  -->
+    <form
+      id="file-upload-form"
+      method="POST"
+      action="/upload-images"
+      class="form-uploader"
+      enctype="multipart/form-data"
+    >
+      <input id="file-upload" type="file" name="fileUpload" multiple />
+      <label for="file-upload" id="file-drag">
+        <div id="start">
+          <i class="fa fa-download" aria-hidden="true"></i>
+          <div>Select multiple images</div>
+          <div id="notimage" class="hidden">Please select an image</div>
+          <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+        </div>
+        <div id="images-preview" class="hidden">
+          <!-- <img id="file-image" src="#" alt="Preview" class="hidden" /> -->
+          <!-- <div id="messages"></div> -->
+          <!-- <progress class="progress" id="file-progress" value="0"><span>0</span>%</progress> -->
+        </div>
+      </label>
+      <input type="submit" name="btn_upload_multiple_images" value="Upload" />
     </form>
+    <script src="/assets/js/index.script.js"></script>
   </body>
 </html>
