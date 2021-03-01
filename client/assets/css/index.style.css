@@ -2,17 +2,73 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 * {
   box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
 }
 
 html,
 body {
   width: 100%;
   height: 100%;
+  font-size: 14px;
+}
+
+section {
+  padding: 2rem 8rem;
 }
 
 section.hero-section {
   height: 100vh;
   background-color: #4e69d0;
+  display: flex;
+  flex-direction: column;
+}
+section.hero-section .logo {
+  display: block;
+}
+section.hero-section .content {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+section.hero-section .content__left {
+  width: 50%;
+  color: white;
+}
+section.hero-section .content__left .left__title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 4rem;
+  font-weight: 800;
+}
+section.hero-section .content__left .left__paragraph {
+  font-size: 2rem;
+  margin: 1rem 0 1.5rem 0;
+}
+section.hero-section .content__left .left__buttons .button__cta {
+  padding: 8px;
+  color: white;
+  background-color: #f02e4e;
+  margin-right: 1.5rem;
+}
+section.hero-section .content__left .left__buttons .button__cta:hover {
+  background-color: #e82343;
+}
+section.hero-section .content__left .left__buttons .button__ghost {
+  padding: 8px;
+  color: white;
+  background-color: transparent;
+  border: 1px solid white;
+}
+section.hero-section .content__left .left__buttons .button__ghost:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+section.hero-section .content__right {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+section.hero-section .content__right .right__image {
+  margin: auto;
+  max-width: 400px;
 }
 
 .form-uploader {
@@ -48,6 +104,28 @@ section.hero-section {
   transform: scale(0.8);
   opacity: 0.3;
 }
+.form-uploader label #start {
+  float: left;
+  clear: both;
+  width: 100%;
+}
+.form-uploader label #start.hidden {
+  display: none;
+}
+.form-uploader label #start i.fa {
+  font-size: 50px;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+.form-uploader label #notimage {
+  display: block;
+  float: left;
+  clear: both;
+  width: 100%;
+}
+.form-uploader label #notimage.hidden {
+  display: none;
+}
 .form-uploader label #images-preview {
   clear: both;
   width: 100%;
@@ -78,28 +156,6 @@ section.hero-section {
 .form-uploader label #images-preview .thumbnail-container .image-thumbnail.hidden {
   display: none;
 }
-.form-uploader #start {
-  float: left;
-  clear: both;
-  width: 100%;
-}
-.form-uploader #start.hidden {
-  display: none;
-}
-.form-uploader #start i.fa {
-  font-size: 50px;
-  margin-bottom: 1rem;
-  transition: all 0.2s ease-in-out;
-}
-.form-uploader #notimage {
-  display: block;
-  float: left;
-  clear: both;
-  width: 100%;
-}
-.form-uploader #notimage.hidden {
-  display: none;
-}
 .form-uploader progress,
 .form-uploader .progress {
   display: inline;
@@ -127,32 +183,6 @@ section.hero-section {
 }
 .form-uploader input[type=file] {
   display: none;
-}
-.form-uploader div {
-  margin: 0 0 0.5rem 0;
-  color: #5f6982;
-}
-.form-uploader .btn {
-  display: inline-block;
-  margin: 0.5rem 0.5rem 1rem 0.5rem;
-  clear: both;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 14px;
-  text-decoration: none;
-  text-transform: initial;
-  border: none;
-  border-radius: 0.2rem;
-  outline: none;
-  padding: 0 1rem;
-  height: 36px;
-  line-height: 36px;
-  color: #fff;
-  transition: all 0.2s ease-in-out;
-  box-sizing: border-box;
-  background: #454cad;
-  border-color: #454cad;
-  cursor: pointer;
 }
 
 /*# sourceMappingURL=index.style.css.map */

@@ -9,23 +9,34 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="assets/css/index.style.css" />
     <title>Home</title>
   </head>
   <body>
-    <!-- <section class="hero-section">
-      <img src="/assets/images/attendy-logo2x.png" width="134px" alt="attendy-logo" />
-      <div class=""></div>
+    <section class="hero-section">
+      <img class="logo" src="/assets/images/attendy-logo2x.png" width="134px" alt="attendy-logo" />
+      <div class="content">
+        <div class="content__left">
+          <h1 class="left__title">Verify your participant attendance</h1>
+          <p class="left__paragraph">
+            easy face scan and get your <br />
+            attendance file in result.
+          </p>
+          <div class="left__buttons">
+            <button class="btn button__cta">Upload Photos</button>
+            <button class="btn button__ghost">How it Works?</button>
+          </div>
+        </div>
+        <div class="content__right">
+          <img class="right__image" src="/assets/images/hero-demo2x.png" alt="demo-pic" />
+        </div>
+      </div>
     </section>
-    <form method="POST" action="/upload-images" enctype="multipart/form-data">
-      <div>
-        <label>Select multiple images:</label>
-        <input type="file" name="multiple_images" multiple />
-      </div>
-      <div>
-        <input type="submit" name="btn_upload_multiple_images" value="Upload" />
-      </div>
-    </form> -->
 
     <!-- Upload  -->
     <form
@@ -39,7 +50,10 @@
       <label for="file-upload" id="file-drag">
         <div id="start">
           <i class="fa fa-download" aria-hidden="true"></i>
-          <div>Select multiple images</div>
+          <div>
+            <p>Select participant images</p>
+            <p>or drag and drop the images</p>
+          </div>
           <div id="notimage" class="hidden">Please select an image</div>
           <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
         </div>
