@@ -1,5 +1,5 @@
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 @import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 * {
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
@@ -71,14 +71,27 @@ section.hero-section .content__right .right__image {
   max-width: 400px;
 }
 
-.form-uploader {
+section.upload-section {
+  background-color: #f8f8f8;
+}
+section.upload-section .container {
+  padding: 2rem 0;
+  text-align: center;
+}
+section.upload-section .container .title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 2rem;
+}
+section.upload-section .container .form-uploader {
+  padding: 2rem 0;
   display: block;
   clear: both;
   margin: 0 auto;
   width: 80%;
   height: 600px;
 }
-.form-uploader label {
+section.upload-section .container .form-uploader label {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -93,71 +106,75 @@ section.hero-section .content__right .right__image {
   transition: all 0.2s ease;
   user-select: none;
 }
-.form-uploader label:hover {
-  border-color: #454cad;
+section.upload-section .container .form-uploader label:hover {
+  border-color: #4e69d0;
 }
-.form-uploader label.hover {
+section.upload-section .container .form-uploader label.hover {
   border: 3px solid #454cad;
   box-shadow: inset 0 0 0 6px #eee;
 }
-.form-uploader label.hover #start i.fa {
+section.upload-section .container .form-uploader label.hover #start i.fa {
   transform: scale(0.8);
   opacity: 0.3;
 }
-.form-uploader label #start {
+section.upload-section .container .form-uploader label #start {
   float: left;
   clear: both;
   width: 100%;
 }
-.form-uploader label #start.hidden {
+section.upload-section .container .form-uploader label #start.hidden {
   display: none;
 }
-.form-uploader label #start i.fa {
+section.upload-section .container .form-uploader label #start i.fa {
   font-size: 50px;
   margin-bottom: 1rem;
   transition: all 0.2s ease-in-out;
 }
-.form-uploader label #notimage {
+section.upload-section .container .form-uploader label #notimage {
   display: block;
   float: left;
   clear: both;
   width: 100%;
 }
-.form-uploader label #notimage.hidden {
+section.upload-section .container .form-uploader label #notimage.hidden {
   display: none;
 }
-.form-uploader label #images-preview {
+section.upload-section .container .form-uploader label #images-preview {
+  overflow-y: auto;
   clear: both;
   width: 100%;
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
-.form-uploader label #images-preview.hidden {
+section.upload-section .container .form-uploader label #images-preview.hidden {
   display: none;
 }
-.form-uploader label #images-preview .thumbnail-container {
+section.upload-section .container .form-uploader label #images-preview .thumbnail-container {
   display: flex;
+  margin: 0 auto 0.7rem auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 120px;
   height: 160px;
-  margin-bottom: 0.5rem;
+  padding-bottom: 0.2rem;
 }
-.form-uploader label #images-preview .thumbnail-container .image-name {
+section.upload-section .container .form-uploader label #images-preview .thumbnail-container .image-name {
+  margin-top: 6px;
   font-size: 8px;
 }
-.form-uploader label #images-preview .thumbnail-container .image-thumbnail {
-  margin: 0 auto 0.5rem auto;
+section.upload-section .container .form-uploader label #images-preview .thumbnail-container .image-thumbnail {
   width: 80%;
+  max-height: 160px;
 }
-.form-uploader label #images-preview .thumbnail-container .image-thumbnail.hidden {
+section.upload-section .container .form-uploader label #images-preview .thumbnail-container .image-thumbnail.hidden {
   display: none;
 }
-.form-uploader progress,
-.form-uploader .progress {
+section.upload-section .container .form-uploader progress,
+section.upload-section .container .form-uploader .progress {
   display: inline;
   clear: both;
   margin: 0 auto;
@@ -169,19 +186,55 @@ section.hero-section .content__right .right__image {
   background-color: #eee;
   overflow: hidden;
 }
-.form-uploader .progress[value]::-webkit-progress-bar {
+section.upload-section .container .form-uploader .progress[value]::-webkit-progress-bar {
   border-radius: 4px;
   background-color: #eee;
 }
-.form-uploader .progress[value]::-webkit-progress-value {
+section.upload-section .container .form-uploader .progress[value]::-webkit-progress-value {
   background: linear-gradient(to right, #393f90 0%, #454cad 50%);
   border-radius: 4px;
 }
-.form-uploader .progress[value]::-moz-progress-bar {
+section.upload-section .container .form-uploader .progress[value]::-moz-progress-bar {
   background: linear-gradient(to right, #393f90 0%, #454cad 50%);
   border-radius: 4px;
 }
-.form-uploader input[type=file] {
+section.upload-section .container .form-uploader input[type=file] {
+  display: none;
+}
+section.upload-section .container .form-uploader .btn-select-file {
+  display: inline-block;
+  margin: 0.5rem 0.5rem 1rem 0.5rem;
+  clear: both;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: initial;
+  border: none;
+  border-radius: 0.2rem;
+  outline: none;
+  padding: 0 1rem;
+  height: 36px;
+  line-height: 36px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  background: #4e69d0;
+  border-color: #4e69d0;
+  cursor: pointer;
+}
+section.upload-section .container .form-uploader .btn-upload {
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin: 1rem 0;
+  padding: 8px 1rem;
+  color: white;
+  background-color: #f02e4e;
+}
+section.upload-section .container .form-uploader .btn-upload:hover {
+  background-color: #e82343;
+}
+section.upload-section .container .form-uploader .btn-upload.hidden {
   display: none;
 }
 

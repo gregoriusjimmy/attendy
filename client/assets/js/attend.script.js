@@ -16,7 +16,7 @@ function startVideo() {
 }
 
 const getImagesData = async (id) => {
-  const response = await fetch(`/api/scan/${id}`)
+  const response = await fetch(`/api/attend/${id}`)
   return await response.json()
 }
 

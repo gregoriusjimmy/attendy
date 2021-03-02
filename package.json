@@ -21,7 +21,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-css": "sass --watch src/scss:client/assets/css       "
+    "build-css": "sass --watch src/scss/main:client/assets/css       "
   },
   "author": "",
   "license": "ISC"

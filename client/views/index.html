@@ -9,9 +9,8 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&family=Open+Sans:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Open+Sans:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/index.style.css" />
@@ -24,7 +23,7 @@
         <div class="content__left">
           <h1 class="left__title">Verify your participant attendance</h1>
           <p class="left__paragraph">
-            easy face scan and get your <br />
+            easy face attend and get your <br />
             attendance file in result.
           </p>
           <div class="left__buttons">
@@ -37,34 +36,49 @@
         </div>
       </div>
     </section>
+    <section class="upload-section">
+      <div class="container">
+        <h1 class="title">Upload your participant picture</h1>
+        <h5 class="caption">your images name represent participant name</h5>
+        <form
+          id="file-upload-form"
+          method="POST"
+          action="/upload-images"
+          class="form-uploader"
+          enctype="multipart/form-data"
+        >
+          <input id="file-upload" type="file" name="fileUpload" multiple />
+          <label for="file-upload" id="file-drag">
+            <div id="start">
+              <i class="fa fa-download" aria-hidden="true"></i>
+              <div>
+                <p>Select participant images</p>
+                <p>or drag & drop the files</p>
+              </div>
+              <div id="notimage" class="hidden">Please select an image</div>
+              <span id="file-upload-btn" class="btn btn-primary btn-select-file"
+                >Select a file</span
+              >
+            </div>
+            <div id="images-preview" class="hidden">
+              <!-- <img id="file-image" src="#" alt="Preview" class="hidden" /> -->
+              <!-- <div id="messages"></div> -->
+              <!-- <progress class="progress" id="file-progress" value="0"><span>0</span>%</progress> -->
+            </div>
+          </label>
+          <input
+            id="btn-upload"
+            type="submit"
+            class="btn btn-upload hidden"
+            name="btn-upload"
+            value="Upload"
+          />
+        </form>
+      </div>
+    </section>
 
     <!-- Upload  -->
-    <form
-      id="file-upload-form"
-      method="POST"
-      action="/upload-images"
-      class="form-uploader"
-      enctype="multipart/form-data"
-    >
-      <input id="file-upload" type="file" name="fileUpload" multiple />
-      <label for="file-upload" id="file-drag">
-        <div id="start">
-          <i class="fa fa-download" aria-hidden="true"></i>
-          <div>
-            <p>Select participant images</p>
-            <p>or drag and drop the images</p>
-          </div>
-          <div id="notimage" class="hidden">Please select an image</div>
-          <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
-        </div>
-        <div id="images-preview" class="hidden">
-          <!-- <img id="file-image" src="#" alt="Preview" class="hidden" /> -->
-          <!-- <div id="messages"></div> -->
-          <!-- <progress class="progress" id="file-progress" value="0"><span>0</span>%</progress> -->
-        </div>
-      </label>
-      <input type="submit" name="btn_upload_multiple_images" value="Upload" />
-    </form>
+
     <script src="/assets/js/index.script.js"></script>
   </body>
 </html>

@@ -62,12 +62,7 @@ function ekUpload() {
       document.getElementById('start').classList.add('hidden')
       document.getElementById('images-preview').classList.remove('hidden')
       document.getElementById('notimage').classList.add('hidden')
-
-      // document.getElementById('file-image').classList.remove('hidden')
-      // document.getElementById('file-image').src = URL.createObjectURL(file)
-      // output('<strong>' + encodeURI(file.name) + '</strong>')
     } else {
-      // document.getElementById('file-image').classList.add('hidden')
       document.getElementById('notimage').classList.remove('hidden')
       document.getElementById('start').classList.remove('hidden')
       document.getElementById('images-preview').classList.add('hidden')
@@ -82,7 +77,7 @@ function ekUpload() {
 
       const imageNameElement = document.createElement('p')
       imageNameElement.classList.add('image-name')
-      const imgNameText = document.createTextNode(files[i].name)
+      const imgNameText = document.createTextNode(files[i].name.split('.')[0])
       imageNameElement.appendChild(imgNameText)
 
       const imageElement = document.createElement('img')
@@ -94,6 +89,7 @@ function ekUpload() {
 
       document.getElementById('images-preview').appendChild(thumbnailContainerElement)
     }
+    document.getElementById('btn-upload').classList.remove('hidden')
   }
 
   // var fileType = file.type;

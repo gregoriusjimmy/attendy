@@ -15,7 +15,7 @@ app.use('/models', express.static(path.join(__dirname, 'models')))
 
 app.get('/', (req, res) => res.sendFile(path.join(VIEWS_DIR, 'index.html')))
 
-app.get('/api/scan/:dirName', (req, res) => {
+app.get('/api/attend/:dirName', (req, res) => {
   const dirName = req.params['dirName']
   const pathToDir = path.join(__dirname, 'uploads', dirName)
   generateUploadedImagesData(pathToDir).then((data) => {
@@ -24,17 +24,17 @@ app.get('/api/scan/:dirName', (req, res) => {
   })
 })
 
-app.get('/scan/:dirName', (req, res) => {
+app.get('/attend/:dirName', (req, res) => {
   const dirName = req.params['dirName']
   // TO DO : handle dirName not available
   app.use('/' + dirName, express.static(path.join(__dirname, 'uploads', dirName)))
-  res.sendFile(path.join(VIEWS_DIR, 'test.html'))
+  res.sendFile(path.join(VIEWS_DIR, 'attend.html'))
 })
 
 app.post('/upload-images', (req, res) => {
   const newDirName = uploadHandler(req, res)
   // TO DO : handle 404 failed process
-  res.redirect(`/scan/${newDirName}`)
+  res.redirect(`/attend/${newDirName}`)
 })
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}!`))
