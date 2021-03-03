@@ -1,13 +1,22 @@
-const video = document.getElementById('video')
+const runAttend = () => {
+  const video = document.getElementById('video')
+  init()
+  startVideo()
+  video.addEventListener('play', async () => {
+    displayDetectionResult(video)
+  })
+}
 
-Promise.all([
-  faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-  faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
-  faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-  faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-]).then((res) => startVideo())
+const init = () => {
+  Promise.all([
+    faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+    faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
+    faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+    faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+  ]).then((res) => startVideo())
+}
 
-function startVideo() {
+const startVideo = () => {
   navigator.getUserMedia(
     { video: {} },
     (stream) => (video.srcObject = stream),
@@ -15,62 +24,74 @@ function startVideo() {
   )
 }
 
+const displayDetectionResult = async (videoElement) => {
+  const canvasElement = document.getElementById('overlay')
+  const displaySize = { width: video.width, height: video.height }
+  const params = window.location.href.split('/')
+  const id = params[params.length - 1]
+  const imagesData = await getImagesData(id)
+  const labeledDescriptors = generateLabeledDescriptors(imagesData)
+  const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors)
+  faceapi.matchDimensions(canvasElement, displaySize)
+
+  setInterval(async () => {
+    const detection = await detectFaceCamera(videoElement)
+    clearCanvas(canvasElement)
+    if (detection) {
+      const bestMatch = faceMatcher.findBestMatch(detection.descriptor)
+      const resizedDetection = faceapi.resizeResults(detection, displaySize)
+      drawFaceDetectionBox(canvasElement, resizedDetection)
+      drawDetectionNameLabel(canvasElement, displaySize, bestMatch.toString())
+    }
+  }, 300)
+}
 const getImagesData = async (id) => {
   const response = await fetch(`/api/attend/${id}`)
   return await response.json()
 }
-
-video.addEventListener('play', async () => {
-  const canvas = faceapi.createCanvasFromMedia(video)
-  document.body.append(canvas)
-  const displaySize = { width: video.width, height: video.height }
-  faceapi.matchDimensions(canvas, displaySize)
-  const params = window.location.href.split('/')
-  const id = params[params.length - 1]
-  const imagesData = await getImagesData(id)
-
+const generateLabeledDescriptors = (imagesData) => {
   let labeledDescriptors = []
-
   for (const imageData of imagesData) {
     labeledDescriptors.push(
       new faceapi.LabeledFaceDescriptors(imageData.label, [new Float32Array(imageData.descriptor)])
     )
   }
+  return labeledDescriptors
+}
+const detectFaceCamera = async (videoElement) => {
+  const detection = await faceapi
+    .detectSingleFace(videoElement, new faceapi.TinyFaceDetectorOptions())
+    .withFaceLandmarks()
+    .withFaceDescriptor()
 
-  const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors)
-  setInterval(async () => {
-    const detections = await faceapi
-      .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
-      .withFaceLandmarks()
-      .withFaceDescriptor()
+  return detection
+}
 
-    if (detections) {
-      const bestMatch = faceMatcher.findBestMatch(detections.descriptor)
-      console.log(bestMatch.toString())
-      const resizedDetections = faceapi.resizeResults(detections, displaySize)
-      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+const clearCanvas = (canvasElement) => {
+  canvasElement.getContext('2d').clearRect(0, 0, canvasElement.width, canvasElement.height)
+}
 
-      // see DrawBoxOptions below
-      const boxDrawOptions = {
-        // label: 'Hello I am a box!',
-        lineWidth: 2,
-      }
-      // faceapi.draw.drawDetections(canvas, resizedDetections)
-      const drawBox = new faceapi.draw.DrawBox(resizedDetections.detection.box, boxDrawOptions)
-      drawBox.draw(canvas)
-      // console.log(detections)
-      const text = [bestMatch.toString()]
-      const anchor = { x: displaySize.width / 2 - 200, y: displaySize.height - 100 }
-      // see DrawTextField below
-      const labelDrawOptions = {
-        anchorPosition: 'TOP_LEFT',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        fontSize: 32,
-        fontColor: 'white',
-        padding: 16,
-      }
-      const drawTextField = new faceapi.draw.DrawTextField(text, anchor, labelDrawOptions)
-      drawTextField.draw(canvas)
-    }
-  }, 300)
-})
+const drawFaceDetectionBox = (canvasElement, resizedDetection) => {
+  const boxDrawOptions = {
+    // label: 'Hello I am a box!',
+    boxColor: '#FEA501',
+    lineWidth: 2,
+  }
+  const drawBox = new faceapi.draw.DrawBox(resizedDetection.detection.box, boxDrawOptions)
+  drawBox.draw(canvasElement)
+}
+
+const drawDetectionNameLabel = (canvasElement, displaySize, label) => {
+  const anchor = { x: 24, y: displaySize.height - 90 }
+  const labelDrawOptions = {
+    anchorPosition: 'TOP_LEFT',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    fontSize: 24,
+    fontColor: 'white',
+    padding: 16,
+  }
+  const drawTextField = new faceapi.draw.DrawTextField([label], anchor, labelDrawOptions)
+  drawTextField.draw(canvasElement)
+}
+
+runAttend()

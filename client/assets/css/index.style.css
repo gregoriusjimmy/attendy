@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 * {
   box-sizing: border-box;
@@ -158,13 +157,12 @@ section.upload-section .container .form-uploader label #images-preview .thumbnai
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 120px;
-  height: 160px;
+  max-width: 180px;
   padding-bottom: 0.2rem;
 }
 section.upload-section .container .form-uploader label #images-preview .thumbnail-container .image-name {
   margin-top: 6px;
-  font-size: 8px;
+  font-size: 12px;
 }
 section.upload-section .container .form-uploader label #images-preview .thumbnail-container .image-thumbnail {
   width: 80%;

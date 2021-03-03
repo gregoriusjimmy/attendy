@@ -164,13 +164,11 @@ section.upload-section {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 120px;
-            height: 160px;
+            max-width: 180px;
             padding-bottom: 0.2rem;
-
             .image-name {
               margin-top: 6px;
-              font-size: 8px;
+              font-size: 12px;
             }
             .image-thumbnail {
               width: 80%;
