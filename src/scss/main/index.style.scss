@@ -1,5 +1,6 @@
 // Imports
 //
+@import '../base/mixins';
 @import '../base/reset';
 @import '../base/variables';
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
@@ -8,46 +9,99 @@
 //
 
 section {
-  padding: 2rem 8rem;
+  padding: 2rem 2rem;
+  @include dekstop {
+    padding: 2rem 7rem;
+  }
 }
 
 section.hero-section {
-  height: 100vh;
+  min-height: 100vh;
   background-color: $primary-color;
   display: flex;
   flex-direction: column;
 
   .logo {
     display: block;
+    max-width: 100px;
+    margin-bottom: 1rem;
+    @include dekstop {
+      max-width: 134px;
+      margin-bottom: unset;
+    }
   }
   .content {
     display: flex;
+    flex-direction: column;
     align-items: center;
-
+    justify-content: center;
     height: 100%;
-    &__left {
-      width: 50%;
+    text-align: center;
+    margin: auto;
+    @include dekstop {
+      max-width: 100%;
+      text-align: unset;
+      flex-direction: row-reverse;
+    }
+    .hero-image-container {
+      width: 38vh;
+      @include dekstop {
+        width: 50%;
+      }
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+      .hero-image {
+        max-width: 38vh;
+        @include dekstop {
+          max-width: 400px;
+        }
+      }
+    }
+
+    .hero-text {
       color: white;
-      .left__title {
+      @include dekstop {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        margin: auto auto auto 0;
+      }
+      .title {
         font-family: 'Montserrat', sans-serif;
-        font-size: 4rem;
         font-weight: 800;
+        @include dekstop {
+          font-size: 3rem;
+        }
       }
-      .left__paragraph {
-        font-size: 2rem;
+      .paragraph {
         margin: 1rem 0 1.5rem 0;
+        font-size: 1.2rem;
+        @include dekstop {
+          font-size: 2rem;
+        }
       }
-      .left__buttons {
-        .button__cta {
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        @include dekstop {
+          flex-direction: row;
+        }
+        .button-cta {
           padding: 8px;
           color: white;
           background-color: $secondary-color;
-          margin-right: 1.5rem;
+          margin-bottom: 1rem;
           &:hover {
             background-color: #e82343;
           }
+          @include dekstop {
+            margin-bottom: unset;
+            margin-right: 1.5rem;
+          }
         }
-        .button__ghost {
+        .button-ghost {
           padding: 8px;
           color: white;
           background-color: transparent;
@@ -56,16 +110,6 @@ section.hero-section {
             background-color: rgba($color: #000000, $alpha: 0.2);
           }
         }
-      }
-    }
-
-    &__right {
-      width: 50%;
-      display: flex;
-      justify-content: center;
-      .right__image {
-        margin: auto;
-        max-width: 400px;
       }
     }
   }

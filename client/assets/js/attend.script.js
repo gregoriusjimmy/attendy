@@ -45,10 +45,12 @@ const displayDetectionResult = async (videoElement) => {
     }
   }, 300)
 }
+
 const getImagesData = async (id) => {
   const response = await fetch(`/api/attend/${id}`)
   return await response.json()
 }
+
 const generateLabeledDescriptors = (imagesData) => {
   let labeledDescriptors = []
   for (const imageData of imagesData) {
@@ -58,6 +60,7 @@ const generateLabeledDescriptors = (imagesData) => {
   }
   return labeledDescriptors
 }
+
 const detectFaceCamera = async (videoElement) => {
   const detection = await faceapi
     .detectSingleFace(videoElement, new faceapi.TinyFaceDetectorOptions())

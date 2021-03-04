@@ -10,64 +10,145 @@ body {
   height: 100%;
   font-size: 14px;
 }
+@media only screen and (min-width: 640px) {
+  html,
+body {
+    font-size: 16px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
 
 section {
-  padding: 2rem 8rem;
+  padding: 2rem 2rem;
+}
+@media only screen and (min-width: 1024px) {
+  section {
+    padding: 2rem 7rem;
+  }
 }
 
 section.hero-section {
-  height: 100vh;
+  min-height: 100vh;
   background-color: #4e69d0;
   display: flex;
   flex-direction: column;
 }
 section.hero-section .logo {
   display: block;
+  max-width: 100px;
+  margin-bottom: 1rem;
+}
+@media only screen and (min-width: 1024px) {
+  section.hero-section .logo {
+    max-width: 134px;
+    margin-bottom: unset;
+  }
 }
 section.hero-section .content {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100%;
+  text-align: center;
+  margin: auto;
 }
-section.hero-section .content__left {
-  width: 50%;
+@media only screen and (min-width: 1024px) {
+  section.hero-section .content {
+    max-width: 100%;
+    text-align: unset;
+    flex-direction: row-reverse;
+  }
+}
+section.hero-section .content .hero-image-container {
+  width: 38vh;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+@media only screen and (min-width: 1024px) {
+  section.hero-section .content .hero-image-container {
+    width: 50%;
+  }
+}
+section.hero-section .content .hero-image-container .hero-image {
+  max-width: 38vh;
+}
+@media only screen and (min-width: 1024px) {
+  section.hero-section .content .hero-image-container .hero-image {
+    max-width: 400px;
+  }
+}
+section.hero-section .content .hero-text {
   color: white;
 }
-section.hero-section .content__left .left__title {
+@media only screen and (min-width: 1024px) {
+  section.hero-section .content .hero-text {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin: auto auto auto 0;
+  }
+}
+section.hero-section .content .hero-text .title {
   font-family: "Montserrat", sans-serif;
-  font-size: 4rem;
   font-weight: 800;
 }
-section.hero-section .content__left .left__paragraph {
-  font-size: 2rem;
-  margin: 1rem 0 1.5rem 0;
+@media only screen and (min-width: 1024px) {
+  section.hero-section .content .hero-text .title {
+    font-size: 3rem;
+  }
 }
-section.hero-section .content__left .left__buttons .button__cta {
+section.hero-section .content .hero-text .paragraph {
+  margin: 1rem 0 1.5rem 0;
+  font-size: 1.2rem;
+}
+@media only screen and (min-width: 1024px) {
+  section.hero-section .content .hero-text .paragraph {
+    font-size: 2rem;
+  }
+}
+section.hero-section .content .hero-text .buttons {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+@media only screen and (min-width: 1024px) {
+  section.hero-section .content .hero-text .buttons {
+    flex-direction: row;
+  }
+}
+section.hero-section .content .hero-text .buttons .button-cta {
   padding: 8px;
   color: white;
   background-color: #f02e4e;
-  margin-right: 1.5rem;
+  margin-bottom: 1rem;
 }
-section.hero-section .content__left .left__buttons .button__cta:hover {
+section.hero-section .content .hero-text .buttons .button-cta:hover {
   background-color: #e82343;
 }
-section.hero-section .content__left .left__buttons .button__ghost {
+@media only screen and (min-width: 1024px) {
+  section.hero-section .content .hero-text .buttons .button-cta {
+    margin-bottom: unset;
+    margin-right: 1.5rem;
+  }
+}
+section.hero-section .content .hero-text .buttons .button-ghost {
   padding: 8px;
   color: white;
   background-color: transparent;
   border: 1px solid white;
 }
-section.hero-section .content__left .left__buttons .button__ghost:hover {
+section.hero-section .content .hero-text .buttons .button-ghost:hover {
   background-color: rgba(0, 0, 0, 0.2);
-}
-section.hero-section .content__right {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-}
-section.hero-section .content__right .right__image {
-  margin: auto;
-  max-width: 400px;
 }
 
 section.upload-section {

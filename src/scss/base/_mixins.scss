@@ -1,0 +1,11 @@
+@mixin tablet {
+  @media only screen and (min-width: 640px) {
+    @content;
+  }
+}
+
+@mixin dekstop {
+  @media only screen and(min-width: 1024px) {
+    @content;
+  }
+}
