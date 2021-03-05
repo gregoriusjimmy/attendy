@@ -1,3 +1,5 @@
+const HashTable = require('./HashTable')
+
 const runAttend = () => {
   const video = document.getElementById('video')
   init()
@@ -33,12 +35,23 @@ const displayDetectionResult = async (videoElement) => {
   const labeledDescriptors = generateLabeledDescriptors(imagesData)
   const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors)
   faceapi.matchDimensions(canvasElement, displaySize)
+  const attendanceHashTable = new HashTable()
 
   setInterval(async () => {
     const detection = await detectFaceCamera(videoElement)
     clearCanvas(canvasElement)
     if (detection) {
       const bestMatch = faceMatcher.findBestMatch(detection.descriptor)
+      let currentBestMatchInTable = attendanceHashTable.search(bestMatch.label)
+      if (currentBestMatchInTable) {
+        if (currentBestMatchInTable.value < bestMatch.distance) {
+          attendanceHashTable.add(bestMatch.label, bestMatch.distance)
+        }
+      } else {
+        attendanceHashTable.add(bestMatch.label, bestMatch.distance)
+        generateRowTable(bestMatch)
+      }
+
       const resizedDetection = faceapi.resizeResults(detection, displaySize)
       drawFaceDetectionBox(canvasElement, resizedDetection)
       drawDetectionNameLabel(canvasElement, displaySize, bestMatch.toString())
@@ -72,6 +85,23 @@ const detectFaceCamera = async (videoElement) => {
 
 const clearCanvas = (canvasElement) => {
   canvasElement.getContext('2d').clearRect(0, 0, canvasElement.width, canvasElement.height)
+}
+
+const generateRowTable = (bestMatch) => {
+  const attendanceTableElement = document.getElementById('attendance-table')
+  const attendanceTableBody = document.getElementById('table-body')
+  const rowElement = document.createElement('tr')
+  const cellNumber = document.createElement('th')
+  cellNumber.setAttribute('scope', 'row')
+  const cellName = document.createElement('td')
+  const cellAttendanceAt = document.createElement('td')
+  cellNumber.textContent = attendanceTableElement.rows.length
+  cellName.textContent = bestMatch.label
+  cellAttendanceAt.textContent = new Date().toLocaleTimeString()
+  rowElement.appendChild(cellNumber)
+  rowElement.appendChild(cellName)
+  rowElement.appendChild(cellAttendanceAt)
+  attendanceTableBody.insertBefore(rowElement, attendanceTableBody.firstChild)
 }
 
 const drawFaceDetectionBox = (canvasElement, resizedDetection) => {
