@@ -3,7 +3,6 @@
 @import '../base/mixins';
 @import '../base/reset';
 @import '../base/variables';
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 
 // Vars and Reset
 //
@@ -125,7 +124,9 @@ section.upload-section {
     .title {
       font-family: 'Montserrat', sans-serif;
       font-weight: 600;
-      font-size: 2rem;
+      @include tablet {
+        font-size: 2rem;
+      }
     }
     .caption {
     }
@@ -135,7 +136,7 @@ section.upload-section {
       clear: both;
       margin: 0 auto;
       width: 80%;
-      height: 600px;
+      max-height: 600px;
 
       label {
         display: flex;
@@ -143,10 +144,13 @@ section.upload-section {
         justify-content: center;
         clear: both;
         width: 100%;
-        padding: 2rem 1.5rem;
+        height: 50vh;
+        padding: 1rem;
+        @include tablet {
+          height: 70vh;
+        }
         text-align: center;
         background: #fff;
-        height: 70vh;
         border-radius: 7px;
         border: 3px solid #eee;
         transition: all 0.2s ease;
@@ -204,7 +208,7 @@ section.upload-section {
           }
           .thumbnail-container {
             display: flex;
-            margin: 0 auto 0.7rem auto;
+            margin: 0 auto 0.2rem auto;
             flex-direction: column;
             justify-content: center;
             align-items: center;

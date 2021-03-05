@@ -1,4 +1,3 @@
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 * {
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
@@ -161,7 +160,11 @@ section.upload-section .container {
 section.upload-section .container .title {
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
-  font-size: 2rem;
+}
+@media only screen and (min-width: 640px) {
+  section.upload-section .container .title {
+    font-size: 2rem;
+  }
 }
 section.upload-section .container .form-uploader {
   padding: 2rem 0;
@@ -169,7 +172,7 @@ section.upload-section .container .form-uploader {
   clear: both;
   margin: 0 auto;
   width: 80%;
-  height: 600px;
+  max-height: 600px;
 }
 section.upload-section .container .form-uploader label {
   display: flex;
@@ -177,14 +180,19 @@ section.upload-section .container .form-uploader label {
   justify-content: center;
   clear: both;
   width: 100%;
-  padding: 2rem 1.5rem;
+  height: 50vh;
+  padding: 1rem;
   text-align: center;
   background: #fff;
-  height: 70vh;
   border-radius: 7px;
   border: 3px solid #eee;
   transition: all 0.2s ease;
   user-select: none;
+}
+@media only screen and (min-width: 640px) {
+  section.upload-section .container .form-uploader label {
+    height: 70vh;
+  }
 }
 section.upload-section .container .form-uploader label:hover {
   border-color: #4e69d0;
@@ -234,7 +242,7 @@ section.upload-section .container .form-uploader label #images-preview.hidden {
 }
 section.upload-section .container .form-uploader label #images-preview .thumbnail-container {
   display: flex;
-  margin: 0 auto 0.7rem auto;
+  margin: 0 auto 0.2rem auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;

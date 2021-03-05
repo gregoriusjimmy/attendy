@@ -2,43 +2,92 @@
 @import '../base/reset';
 @import '../base/variables';
 
-// body {
-//   margin: 0;
-//   padding: 0;
-//   width: 100vw;
-//   height: 100vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
+header {
+  background-color: $primary-color;
+  padding: 1rem;
+  .logo {
+    display: block;
+    max-width: 100px;
 
-.attend {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  height: 100vh;
-  align-items: center;
-  .video-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    video {
-      width: 80%;
-    }
-    canvas {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80%;
+    @include dekstop {
+      margin-left: 1rem;
+      max-width: 134px;
+      margin-bottom: unset;
     }
   }
-  .attendance-list {
-    display: flex;
-    justify-content: center;
+}
 
-    table {
-      margin: auto;
+main {
+  padding: 2rem;
+  background: #fff;
+  @include tablet {
+    padding: 2rem 3rem;
+  }
+  .attend {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    height: 90vh;
+
+    @include dekstop {
+      flex-direction: row;
+    }
+
+    .video-container {
+      width: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+      @include tablet {
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 3rem;
+      }
+      @include dekstop {
+        margin-bottom: unset;
+        width: 50%;
+        align-items: flex-start;
+      }
+
+      video {
+        width: 100%;
+        height: auto;
+        @include tablet {
+          width: 80%;
+        }
+      }
+      canvas {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @include tablet {
+          width: 80%;
+        }
+        @include dekstop {
+          top: 0;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+          transform: unset;
+        }
+      }
+    }
+    .table-container {
+      display: flex;
+      justify-content: center;
+
+      @include dekstop {
+        width: 50%;
+        align-self: flex-start;
+      }
+
+      .attendance-table {
+      }
     }
   }
 }

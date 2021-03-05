@@ -19,35 +19,40 @@
     <script src="/assets/dist/face-api.js"></script>
   </head>
   <body>
-    <div class="attend">
-      <div class="video-container">
-        <video id="video" width="720" height="560" autoplay muted></video>
-        <canvas id="overlay"></canvas>
+    <header>
+      <img class="logo" src="/assets/images/attendy-logo2x.png" alt="attendy-logo" />
+    </header>
+    <main>
+      <div class="attend">
+        <div class="video-container">
+          <video id="video" width="720" height="560" autoplay muted></video>
+          <canvas id="overlay"></canvas>
+        </div>
+        <div class="table-container">
+          <table id="attendance-table" class="table">
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Attemd at</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="attendance-list">
-        <table id="attendance-table" class="table">
-          <thead>
-            <tr>
-              <th scope="col">No.</th>
-              <th scope="col">Name</th>
-              <th scope="col">Attemd at</th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    </main>
     <script src="/assets/js/attend.bundle.js"></script>
   </body>
 </html>

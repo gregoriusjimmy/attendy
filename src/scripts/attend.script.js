@@ -28,7 +28,10 @@ const startVideo = () => {
 
 const displayDetectionResult = async (videoElement) => {
   const canvasElement = document.getElementById('overlay')
-  const displaySize = { width: video.width, height: video.height }
+  const displaySize = { width: videoElement.width, height: videoElement.height }
+
+  console.log(videoElement)
+  console.log(videoElement.width)
   const params = window.location.href.split('/')
   const id = params[params.length - 1]
   const imagesData = await getImagesData(id)
