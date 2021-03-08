@@ -84,6 +84,7 @@ section.hero-section {
         display: flex;
         flex-direction: column;
         width: 100%;
+        color: white;
         @include dekstop {
           flex-direction: row;
         }
@@ -114,8 +115,6 @@ section.hero-section {
   }
 }
 
-// Upload Demo
-//
 section.upload-section {
   background-color: #f8f8f8;
   .container {
@@ -124,11 +123,13 @@ section.upload-section {
     .title {
       font-family: 'Montserrat', sans-serif;
       font-weight: 600;
+      margin-bottom: 1rem;
       @include tablet {
         font-size: 2rem;
       }
     }
     .caption {
+      margin-bottom: 1rem;
     }
     .form-uploader {
       padding: 2rem 0;
@@ -297,6 +298,61 @@ section.upload-section {
         }
         &.hidden {
           display: none;
+        }
+      }
+    }
+  }
+}
+section.how-it-works-section {
+  background: $primary-color;
+  color: whitesmoke;
+  .container {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    margin: 2rem 0;
+    h2 {
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      margin: 1rem 0 2rem 0;
+      @include tablet {
+        font-size: 2rem;
+      }
+      @include dekstop {
+        margin: 1rem 0 4rem 0;
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      @include dekstop {
+        flex-direction: row;
+        text-align: unset;
+        align-items: center;
+        margin-bottom: 1rem;
+        justify-content: space-around;
+        &:nth-child(odd) {
+          flex-direction: row-reverse;
+        }
+      }
+      .img-container {
+        margin: 2rem 0;
+
+        img {
+          max-width: 50%;
+          @include dekstop {
+            max-width: 100%;
+            margin: auto;
+          }
+        }
+      }
+      .text-container {
+        margin-bottom: 3rem;
+        @include dekstop {
+          max-width: 40%;
         }
       }
     }

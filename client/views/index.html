@@ -27,15 +27,17 @@
           <h1 class="title">Verify your participant attendance</h1>
           <p class="paragraph">easy face attend and get your attendance file in result.</p>
           <div class="buttons">
-            <button class="btn button-cta">Upload Photos</button>
-            <button class="btn button-ghost">How it Works?</button>
+            <button class="btn button-cta"><a href="#upload-section">Upload Photos</a></button>
+            <button class="btn button-ghost">
+              <a href="#how-it-works-section">How it Works</a>
+            </button>
           </div>
         </div>
       </div>
     </section>
-    <section class="upload-section">
+    <section id="upload-section" class="upload-section">
       <div class="container">
-        <h1 class="title">Upload your participant picture</h1>
+        <h2 class="title">Upload your participant picture</h2>
         <h5 class="caption">your images name represent participant name</h5>
         <form
           id="file-upload-form"
@@ -73,8 +75,46 @@
         </form>
       </div>
     </section>
-
-    <!-- Upload  -->
+    <section id="how-it-works-section" class="how-it-works-section">
+      <div class="container">
+        <h2>How it Works</h2>
+        <div class="content">
+          <div class="img-container">
+            <img src="/assets/images/attendy-illustration1.svg" alt="illustration1" />
+          </div>
+          <div class="text-container">
+            <h3>Upload your participant picture</h3>
+            <p>
+              your images name represent participant name. files can be jpg, jpeg, or png format.
+            </p>
+          </div>
+        </div>
+        <div class="content">
+          <div class="img-container">
+            <img src="/assets/images/attendy-illustration2.svg" alt="illustration2" />
+          </div>
+          <div class="text-container">
+            <h3>Attend participant with face recognition</h3>
+            <p>
+              You will be redirected to attendance page, place your participant face in front of
+              your camera and we will automatically verify your participant.
+            </p>
+          </div>
+        </div>
+        <div class="content">
+          <div class="img-container">
+            <img src="/assets/images/attendy-illustration3.svg" alt="illustration3" />
+          </div>
+          <div class="text-container">
+            <h3>Export your attendance result</h3>
+            <p>
+              You can download the result file in xls format and enjoy the event that you currently
+              holding.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <script src="/assets/js/index.script.js"></script>
   </body>

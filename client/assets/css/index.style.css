@@ -1,3 +1,4 @@
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 * {
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
@@ -23,6 +24,11 @@ html {
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 section {
@@ -119,6 +125,7 @@ section.hero-section .content .hero-text .buttons {
   display: flex;
   flex-direction: column;
   width: 100%;
+  color: white;
 }
 @media only screen and (min-width: 1024px) {
   section.hero-section .content .hero-text .buttons {
@@ -160,11 +167,15 @@ section.upload-section .container {
 section.upload-section .container .title {
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
+  margin-bottom: 1rem;
 }
 @media only screen and (min-width: 640px) {
   section.upload-section .container .title {
     font-size: 2rem;
   }
+}
+section.upload-section .container .caption {
+  margin-bottom: 1rem;
 }
 section.upload-section .container .form-uploader {
   padding: 2rem 0;
@@ -323,6 +334,70 @@ section.upload-section .container .form-uploader .btn-upload:hover {
 }
 section.upload-section .container .form-uploader .btn-upload.hidden {
   display: none;
+}
+
+section.how-it-works-section {
+  background: #4e69d0;
+  color: whitesmoke;
+}
+section.how-it-works-section .container {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  margin: 2rem 0;
+}
+section.how-it-works-section .container h2 {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  margin: 1rem 0 2rem 0;
+}
+@media only screen and (min-width: 640px) {
+  section.how-it-works-section .container h2 {
+    font-size: 2rem;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  section.how-it-works-section .container h2 {
+    margin: 1rem 0 4rem 0;
+  }
+}
+section.how-it-works-section .container .content {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+@media only screen and (min-width: 1024px) {
+  section.how-it-works-section .container .content {
+    flex-direction: row;
+    text-align: unset;
+    align-items: center;
+    margin-bottom: 1rem;
+    justify-content: space-around;
+  }
+  section.how-it-works-section .container .content:nth-child(odd) {
+    flex-direction: row-reverse;
+  }
+}
+section.how-it-works-section .container .content .img-container {
+  margin: 2rem 0;
+}
+section.how-it-works-section .container .content .img-container img {
+  max-width: 50%;
+}
+@media only screen and (min-width: 1024px) {
+  section.how-it-works-section .container .content .img-container img {
+    max-width: 100%;
+    margin: auto;
+  }
+}
+section.how-it-works-section .container .content .text-container {
+  margin-bottom: 3rem;
+}
+@media only screen and (min-width: 1024px) {
+  section.how-it-works-section .container .content .text-container {
+    max-width: 40%;
+  }
 }
 
 /*# sourceMappingURL=index.style.css.map */
