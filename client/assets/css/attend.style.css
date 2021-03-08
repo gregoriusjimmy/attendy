@@ -30,6 +30,9 @@ a {
   text-decoration: none;
   color: inherit;
 }
+a:hover {
+  color: inherit;
+}
 
 header {
   background-color: #4e69d0;
