@@ -1,7 +1,8 @@
 import express from 'express'
 import path from 'path'
-import { generateUploadedImagesData } from './src/utils'
+import { generateUploadedImagesData } from './src/utils/generateUploadedImagesData'
 import { uploadHandler } from './src/middleware/handleUploadFile'
+import { createDir, generateNewDirName } from './src/utils/createDir'
 
 const PORT = 3000
 const VIEWS_DIR = path.join(__dirname, '/client/views')
@@ -31,10 +32,18 @@ app.get('/attend/:dirName', (req, res) => {
   res.sendFile(path.join(VIEWS_DIR, 'attend.html'))
 })
 
-app.post('/upload-images', (req, res) => {
-  const newDirName = uploadHandler(req, res)
+app.get('/api/getDirName', (req, res) => {
+  const dirName = generateNewDirName()
+  res.json(dirName)
+})
+
+app.post('/upload-images/:dirName', async (req, res) => {
+  const dirName = req.params['dirName']
+  await createDir(dirName)
+  uploadHandler(req, res, dirName)
   // TO DO : handle 404 failed process
-  res.redirect(`/attend/${newDirName}`)
+  res.status(200).end()
+  // res.redirect(`/attend/${dirName}`)
 })
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}!`))

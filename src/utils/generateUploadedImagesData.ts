@@ -26,7 +26,7 @@ export const generateUploadedImagesData = async (dirPath: string): Promise<Uploa
 }
 
 const loadModels = async () => {
-  const MODELS_LOCATION = path.join(__dirname, '..', 'models')
+  const MODELS_LOCATION = path.join(__dirname, '..', '..', 'models')
   await faceapi.nets.tinyFaceDetector.loadFromDisk(MODELS_LOCATION)
   await faceapi.nets.ssdMobilenetv1.loadFromDisk(MODELS_LOCATION)
   await faceapi.nets.faceLandmark68Net.loadFromDisk(MODELS_LOCATION)
