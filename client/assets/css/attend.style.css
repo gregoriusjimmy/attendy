@@ -35,6 +35,29 @@ a:hover {
   color: inherit;
 }
 
+.loading-overlay {
+  padding: 1rem 3rem;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 2;
+  background-color: #4e69d0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.loading-overlay.hidden {
+  display: none;
+}
+.loading-overlay h1 {
+  color: white;
+  font-weight: 600;
+  font-weight: 2rem;
+  margin-bottom: 5rem;
+}
 header {
   background-color: #4e69d0;
   padding: 1rem;
@@ -65,7 +88,6 @@ main .attend {
   flex-direction: column;
   flex: 1;
   width: 100%;
-  height: 90vh;
 }
 @media only screen and (min-width: 1024px) {
   main .attend {

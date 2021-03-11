@@ -19,6 +19,19 @@
     <script src="/assets/dist/face-api.min.js"></script>
   </head>
   <body>
+    <div id="loading-overlay" class="loading-overlay">
+      <h1>Please wait, we are processing your files...</h1>
+      <div class="animation-container">
+        <lottie-player
+          src="https://assets8.lottiefiles.com/packages/lf20_sen1ai7d.json"
+          background="transparent"
+          speed="1"
+          style="width: 500px; height: 500px"
+          loop
+          autoplay
+        ></lottie-player>
+      </div>
+    </div>
     <header>
       <img class="logo" src="/assets/images/attendy-logo2x.png" alt="attendy-logo" />
     </header>
@@ -53,6 +66,7 @@
         </div>
       </div>
     </main>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="/assets/js/attend.bundle.js"></script>
   </body>
 </html>

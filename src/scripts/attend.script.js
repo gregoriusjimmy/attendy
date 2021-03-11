@@ -2,20 +2,25 @@ const HashTable = require('./HashTable')
 
 const runAttend = () => {
   const video = document.getElementById('video')
-  init()
-  startVideo()
-  video.addEventListener('play', async () => {
-    displayDetectionResult(video)
+  const params = window.location.href.split('/')
+  const id = params[params.length - 1]
+  loadModels()
+  getImagesData(id).then((imagesData) => {
+    document.getElementById('loading-overlay').classList.add('hidden')
+    startVideo()
+    video.addEventListener('play', async () => {
+      displayDetectionResult(video, imagesData)
+    })
   })
 }
 
-const init = () => {
-  Promise.all([
+const loadModels = async () => {
+  await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
     faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
     faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
     faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-  ]).then((res) => startVideo())
+  ])
 }
 
 const startVideo = () => {
@@ -26,15 +31,10 @@ const startVideo = () => {
   )
 }
 
-const displayDetectionResult = async (videoElement) => {
+const displayDetectionResult = async (videoElement, imagesData) => {
   const canvasElement = document.getElementById('overlay')
   const displaySize = { width: videoElement.width, height: videoElement.height }
 
-  console.log(videoElement)
-  console.log(videoElement.width)
-  const params = window.location.href.split('/')
-  const id = params[params.length - 1]
-  const imagesData = await getImagesData(id)
   const labeledDescriptors = generateLabeledDescriptors(imagesData)
   const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors)
   faceapi.matchDimensions(canvasElement, displaySize)

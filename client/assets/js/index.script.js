@@ -3,8 +3,9 @@ Dropzone.autoDiscover = false
 const getDropzoneOptions = (dirName) => {
   return (options = {
     paramName: 'fileUpload',
-    maxFilesize: 5, // MB,
+    maxFilesize: 3, // MB,
     url: '/upload-images/' + dirName,
+    timeout: 50000,
     accept: function (file, done) {
       const isImage = /\.(?=gif|jpg|png|jpeg)/gi.test(file.name)
       if (isImage) {
