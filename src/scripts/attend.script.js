@@ -17,7 +17,7 @@ const runAttend = () => {
 const loadModels = async () => {
   await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-    faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
+    // faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
     faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
     faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
   ])
@@ -46,6 +46,7 @@ const displayDetectionResult = async (videoElement, imagesData) => {
     if (detection) {
       const bestMatch = faceMatcher.findBestMatch(detection.descriptor)
       let currentBestMatchInTable = attendanceHashTable.search(bestMatch.label)
+      if (bestMatch.label === 'unknown') return
       if (currentBestMatchInTable) {
         if (currentBestMatchInTable.value < bestMatch.distance) {
           attendanceHashTable.add(bestMatch.label, bestMatch.distance)
