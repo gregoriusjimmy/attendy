@@ -23,6 +23,10 @@ const loadModels = async () => {
   ])
 }
 
+const getImagesData = async (id) => {
+  const response = await fetch(`/api/attend/${id}`)
+  return await response.json()
+}
 const startVideo = () => {
   navigator.getUserMedia(
     { video: {} },
@@ -34,11 +38,13 @@ const startVideo = () => {
 const displayDetectionResult = async (videoElement, imagesData) => {
   const canvasElement = document.getElementById('overlay')
   const displaySize = { width: videoElement.width, height: videoElement.height }
-
   const labeledDescriptors = generateLabeledDescriptors(imagesData)
-  const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors)
+  const maxDescriptorDistance = 0.6
+  const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, maxDescriptorDistance)
   faceapi.matchDimensions(canvasElement, displaySize)
   const attendanceHashTable = new HashTable()
+  const maxOccurenceLength = 5
+  let occurrence = []
 
   setInterval(async () => {
     const detection = await detectFaceCamera(videoElement)
@@ -47,13 +53,22 @@ const displayDetectionResult = async (videoElement, imagesData) => {
       const bestMatch = faceMatcher.findBestMatch(detection.descriptor)
       let currentBestMatchInTable = attendanceHashTable.search(bestMatch.label)
       if (bestMatch.label === 'unknown') return
-      if (currentBestMatchInTable) {
-        if (currentBestMatchInTable.value < bestMatch.distance) {
-          attendanceHashTable.add(bestMatch.label, bestMatch.distance)
+
+      // algorithm to handle detected face. to avoid detected face being attended
+      // with a different person, we verify it by checking if the detected face was
+      // detected at a given amount.
+      if (occurrence.length > maxOccurenceLength) {
+        if (isAllEqual(occurrence)) {
+          if (currentBestMatchInTable) {
+            if (currentBestMatchInTable.value < bestMatch.distance) {
+              attendanceHashTable.add(bestMatch.label, bestMatch.distance)
+            }
+          } else {
+            attendanceHashTable.add(bestMatch.label, bestMatch.distance)
+            generateRowTable(bestMatch)
+          }
         }
-      } else {
-        attendanceHashTable.add(bestMatch.label, bestMatch.distance)
-        generateRowTable(bestMatch)
+        occurrence = []
       }
 
       const resizedDetection = faceapi.resizeResults(detection, displaySize)
@@ -61,11 +76,6 @@ const displayDetectionResult = async (videoElement, imagesData) => {
       drawDetectionNameLabel(canvasElement, displaySize, bestMatch.toString())
     }
   }, 300)
-}
-
-const getImagesData = async (id) => {
-  const response = await fetch(`/api/attend/${id}`)
-  return await response.json()
 }
 
 const generateLabeledDescriptors = (imagesData) => {
@@ -90,6 +100,8 @@ const detectFaceCamera = async (videoElement) => {
 const clearCanvas = (canvasElement) => {
   canvasElement.getContext('2d').clearRect(0, 0, canvasElement.width, canvasElement.height)
 }
+
+const isAllEqual = (arr) => arr.every((val) => val === arr[0])
 
 const generateRowTable = (bestMatch) => {
   const attendanceTableElement = document.getElementById('attendance-table')

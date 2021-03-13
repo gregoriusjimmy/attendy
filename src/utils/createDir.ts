@@ -6,7 +6,7 @@ const UPLOAD_FOLDER = 'uploads'
 export const createDir = async (dirName: string) => {
   try {
     const dirPath = path.join(__dirname, '..', '..', UPLOAD_FOLDER, dirName)
-    if ((await isDirExist(dirPath)) === false) generateNewDir(dirPath)
+    if ((await isDirExist(dirPath)) === false) await generateNewDir(dirPath)
   } catch (error) {
     console.error('falied create dir:', error.message)
   }
