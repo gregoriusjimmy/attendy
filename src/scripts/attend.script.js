@@ -1,5 +1,5 @@
-const HashTable = require('./HashTable')
-
+import HashTable from './HashTable'
+import { generateSheet, s2ab } from './sheet'
 const runAttend = () => {
   const video = document.getElementById('video')
   const params = window.location.href.split('/')
@@ -17,7 +17,6 @@ const runAttend = () => {
 const loadModels = async () => {
   await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-    // faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
     faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
     faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
   ])
@@ -46,6 +45,9 @@ const displayDetectionResult = async (videoElement, imagesData) => {
   const maxOccurenceLength = 5
   let occurrence = []
 
+  const exportXlsxBtn = document.getElementById('export-to-xlsx-btn')
+  exportXlsxBtn.addEventListener('click', () => exportToXlsx(attendanceHashTable))
+
   setInterval(async () => {
     const detection = await detectFaceCamera(videoElement)
     clearCanvas(canvasElement)
@@ -53,6 +55,7 @@ const displayDetectionResult = async (videoElement, imagesData) => {
       const bestMatch = faceMatcher.findBestMatch(detection.descriptor)
       let currentBestMatchInTable = attendanceHashTable.search(bestMatch.label)
       if (bestMatch.label === 'unknown') return
+      occurrence.push(bestMatch.label)
 
       // algorithm to handle detected face. to avoid detected face being attended
       // with a different person, we verify it by checking if the detected face was
@@ -61,11 +64,15 @@ const displayDetectionResult = async (videoElement, imagesData) => {
         if (isAllEqual(occurrence)) {
           if (currentBestMatchInTable) {
             if (currentBestMatchInTable.value < bestMatch.distance) {
-              attendanceHashTable.add(bestMatch.label, bestMatch.distance)
+              attendanceHashTable.add(bestMatch.label, { distance: bestMatch.distance })
             }
           } else {
-            attendanceHashTable.add(bestMatch.label, bestMatch.distance)
-            generateRowTable(bestMatch)
+            const attendTime = new Date().toLocaleTimeString()
+            attendanceHashTable.add(bestMatch.label, {
+              distance: bestMatch.distance,
+              time: attendTime,
+            })
+            generateRowTable(bestMatch, attendTime)
           }
         }
         occurrence = []
@@ -88,6 +95,20 @@ const generateLabeledDescriptors = (imagesData) => {
   return labeledDescriptors
 }
 
+const exportToXlsx = (attendanceHashTable) => {
+  const tableData = attendanceHashTable.getTable()
+  const convertedTableDataToObj = []
+  for (let i = 0; i < tableData.length; i++) {
+    convertedTableDataToObj.push({
+      Name: tableData[i]['key'],
+      'Attend at': tableData[i]['value'].time,
+    })
+  }
+
+  const workBook = generateSheet(convertedTableDataToObj)
+  saveAs(new Blob([s2ab(workBook)], { type: 'application/octet-stream' }), 'attend.xlsx')
+}
+
 const detectFaceCamera = async (videoElement) => {
   const detection = await faceapi
     .detectSingleFace(videoElement, new faceapi.TinyFaceDetectorOptions())
@@ -103,7 +124,7 @@ const clearCanvas = (canvasElement) => {
 
 const isAllEqual = (arr) => arr.every((val) => val === arr[0])
 
-const generateRowTable = (bestMatch) => {
+const generateRowTable = (bestMatch, attendTime) => {
   const attendanceTableElement = document.getElementById('attendance-table')
   const attendanceTableBody = document.getElementById('table-body')
   const rowElement = document.createElement('tr')
@@ -113,7 +134,7 @@ const generateRowTable = (bestMatch) => {
   const cellAttendanceAt = document.createElement('td')
   cellNumber.textContent = attendanceTableElement.rows.length
   cellName.textContent = bestMatch.label
-  cellAttendanceAt.textContent = new Date().toLocaleTimeString()
+  cellAttendanceAt.textContent = attendTime
   rowElement.appendChild(cellNumber)
   rowElement.appendChild(cellName)
   rowElement.appendChild(cellAttendanceAt)

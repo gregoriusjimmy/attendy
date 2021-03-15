@@ -15,10 +15,11 @@ class HashTable {
   }
   add(key, value) {
     let index = this._hash(key)
+
     if (!this.keyMap[index]) {
       this.keyMap[index] = {}
     }
-    this.keyMap[index] = { key, value }
+    this.keyMap[index] = { key, value: { ...value } }
   }
   search(key) {
     let index = this._hash(key)
@@ -31,7 +32,7 @@ class HashTable {
     let keysArr = []
     for (let i = 0; i < this.keyMap.length; i++) {
       if (this.keyMap[i]) {
-        keysArr.push(this.keyMap[i][0])
+        keysArr.push(this.keyMap[i]['key'])
       }
     }
     return keysArr
@@ -40,11 +41,23 @@ class HashTable {
     let valuesArr = []
     for (let i = 0; i < this.keyMap.length; i++) {
       if (this.keyMap[i]) {
-        valuesArr.push(this.keyMap[i][1])
+        valuesArr.push(this.keyMap[i]['value'])
       }
     }
     return valuesArr
   }
+  getTable() {
+    let table = []
+    for (let i = 0; i < this.keyMap.length; i++) {
+      if (this.keyMap[i]) {
+        table.push({
+          key: this.keyMap[i]['key'],
+          value: this.keyMap[i]['value'],
+        })
+      }
+    }
+    return table
+  }
 }
 
-module.exports = HashTable
+export default HashTable
