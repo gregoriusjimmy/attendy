@@ -43,21 +43,22 @@
           <video id="video" width="720" height="560" autoplay muted></video>
           <canvas id="overlay"></canvas>
         </div>
-
         <div class="table-container">
           <table id="attendance-table" class="table">
             <thead>
               <tr>
                 <th scope="col">No.</th>
                 <th scope="col">Name</th>
-                <th scope="col">Attemd at</th>
+                <th scope="col">Attend at</th>
               </tr>
             </thead>
             <tbody id="table-body"></tbody>
           </table>
         </div>
       </div>
-      <button id="export-to-xlsx-btn">Export</button>
+      <div class="bottom">
+        <button id="export-to-xlsx-btn" class="btn">Export to Excel</button>
+      </div>
     </main>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="/assets/js/attend.bundle.js"></script>

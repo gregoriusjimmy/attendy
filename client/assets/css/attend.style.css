@@ -35,6 +35,10 @@ a:hover {
   color: inherit;
 }
 
+body {
+  background: #f8f8f8;
+}
+
 .loading-overlay {
   padding: 1rem 3rem;
   text-align: center;
@@ -80,7 +84,6 @@ header .logo {
 
 main {
   padding: 2rem;
-  background: #f8f8f8;
 }
 @media only screen and (min-width: 640px) {
   main {
@@ -156,11 +159,33 @@ main .attend .video-container canvas {
 main .attend .table-container {
   display: flex;
   justify-content: center;
+  height: 200px;
 }
 @media only screen and (min-width: 1024px) {
   main .attend .table-container {
     width: 50%;
+    height: 58vh;
     align-self: flex-start;
+  }
+}
+main .bottom {
+  display: flex;
+  justify-content: flex-end;
+}
+main .bottom #export-to-xlsx-btn {
+  width: 100%;
+  padding: 8px;
+  color: white;
+  background-color: #f02e4e;
+  margin-top: 2rem;
+  font-weight: 600;
+}
+main .bottom #export-to-xlsx-btn:hover {
+  background-color: #e82343;
+}
+@media only screen and (min-width: 1024px) {
+  main .bottom #export-to-xlsx-btn {
+    width: unset;
   }
 }
 

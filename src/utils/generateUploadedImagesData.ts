@@ -45,7 +45,7 @@ const proccessImages = async (dirPath: string): Promise<UploadedImageData[]> => 
       .withFaceLandmarks()
       .withFaceDescriptor()
 
-    // descrtiptor from faceapi return a Float32Array, we want to send the descriptor
+    // descriptor from faceapi return a Float32Array, we want to send the descriptor
     // to the client through json but json doesn't understrand Float32Array. So we
     // convert it to Array then convert it back to Float32Array in the client.
     imagesData.push({

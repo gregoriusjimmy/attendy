@@ -26,6 +26,7 @@ const getImagesData = async (id) => {
   const response = await fetch(`/api/attend/${id}`)
   return await response.json()
 }
+
 const startVideo = () => {
   navigator.getUserMedia(
     { video: {} },
@@ -104,7 +105,6 @@ const exportToXlsx = (attendanceHashTable) => {
       'Attend at': tableData[i]['value'].time,
     })
   }
-
   const workBook = generateSheet(convertedTableDataToObj)
   saveAs(new Blob([s2ab(workBook)], { type: 'application/octet-stream' }), 'attend.xlsx')
 }

@@ -199,6 +199,9 @@ section.upload-section .container .dropzone {
 section.upload-section .container .dropzone .dz-message {
   margin-top: 150px;
 }
+section.upload-section .container .dropzone .dz-preview {
+  margin: 1rem;
+}
 section.upload-section .container .btn-redirect {
   margin-top: 2rem;
   padding: 1rem 8px;

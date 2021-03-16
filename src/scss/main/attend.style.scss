@@ -2,6 +2,10 @@
 @import '../base/reset';
 @import '../base/variables';
 
+body {
+  background: #f8f8f8;
+}
+
 .loading-overlay {
   padding: 1rem 3rem;
   text-align: center;
@@ -48,7 +52,6 @@ header {
 
 main {
   padding: 2rem;
-  background: #f8f8f8;
   @include tablet {
     padding: 2rem 3rem;
   }
@@ -111,13 +114,34 @@ main {
     .table-container {
       display: flex;
       justify-content: center;
-
+      height: 200px;
       @include dekstop {
         width: 50%;
+        height: 58vh;
         align-self: flex-start;
       }
 
       .attendance-table {
+      }
+    }
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: flex-end;
+    #export-to-xlsx-btn {
+      width: 100%;
+      padding: 8px;
+      color: white;
+      background-color: $secondary-color;
+      margin-top: 2rem;
+      font-weight: 600;
+
+      &:hover {
+        background-color: #e82343;
+      }
+      @include dekstop {
+        width: unset;
       }
     }
   }
