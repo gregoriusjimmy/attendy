@@ -202,7 +202,10 @@ section.upload-section .container .dropzone .dz-message {
 section.upload-section .container .dropzone .dz-preview {
   margin: 1rem;
 }
-section.upload-section .container .btn-redirect {
+section.upload-section .container #redirect.hidden {
+  display: none;
+}
+section.upload-section .container #redirect .btn-redirect {
   margin-top: 2rem;
   padding: 1rem 8px;
   color: white;
@@ -210,11 +213,11 @@ section.upload-section .container .btn-redirect {
   background-color: #f02e4e;
   font-weight: 600;
 }
-section.upload-section .container .btn-redirect:hover {
+section.upload-section .container #redirect .btn-redirect:hover {
   background-color: #e82343;
 }
 @media only screen and (min-width: 1024px) {
-  section.upload-section .container .btn-redirect {
+  section.upload-section .container #redirect .btn-redirect {
     margin-bottom: unset;
   }
 }

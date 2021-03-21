@@ -1,16 +1,16 @@
 import HashTable from './HashTable'
 import { generateSheet, s2ab } from './sheet'
-const runAttend = () => {
+const runAttend = async () => {
   const video = document.getElementById('video')
   const params = window.location.href.split('/')
   const id = params[params.length - 1]
-  loadModels()
+  await loadModels()
   getImagesData(id).then((imagesData) => {
-    document.getElementById('loading-overlay').classList.add('hidden')
     startVideo()
     video.addEventListener('play', async () => {
       displayDetectionResult(video, imagesData)
     })
+    document.getElementById('loading-overlay').classList.add('hidden')
   })
 }
 
@@ -68,7 +68,7 @@ const displayDetectionResult = async (videoElement, imagesData) => {
               attendanceHashTable.add(bestMatch.label, { distance: bestMatch.distance })
             }
           } else {
-            const attendTime = new Date().toLocaleTimeString()
+            const attendTime = new Date().toLocaleTimeString([], { hour12: false })
             attendanceHashTable.add(bestMatch.label, {
               distance: bestMatch.distance,
               time: attendTime,

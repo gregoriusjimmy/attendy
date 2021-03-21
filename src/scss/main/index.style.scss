@@ -154,19 +154,24 @@ section.upload-section {
         margin: 1rem;
       }
     }
-    .btn-redirect {
-      margin-top: 2rem;
-      padding: 1rem 8px;
-      color: white;
-      width: 80%;
-      background-color: $secondary-color;
-
-      font-weight: 600;
-      &:hover {
-        background-color: #e82343;
+    #redirect {
+      &.hidden {
+        display: none;
       }
-      @include dekstop {
-        margin-bottom: unset;
+      .btn-redirect {
+        margin-top: 2rem;
+        padding: 1rem 8px;
+        color: white;
+        width: 80%;
+        background-color: $secondary-color;
+
+        font-weight: 600;
+        &:hover {
+          background-color: #e82343;
+        }
+        @include dekstop {
+          margin-bottom: unset;
+        }
       }
     }
   }
