@@ -73,7 +73,7 @@ const displayDetectionResult = async (videoElement, imagesData) => {
               distance: bestMatch.distance,
               time: attendTime,
             })
-            generateRowTable(bestMatch, attendTime)
+            generateRowTable(bestMatch, attendTime, attendanceHashTable)
           }
         }
         occurrence = []
@@ -124,7 +124,7 @@ const clearCanvas = (canvasElement) => {
 
 const isAllEqual = (arr) => arr.every((val) => val === arr[0])
 
-const generateRowTable = (bestMatch, attendTime) => {
+const generateRowTable = (bestMatch, attendTime, attendanceHashTable) => {
   const attendanceTableElement = document.getElementById('attendance-table')
   const attendanceTableBody = document.getElementById('table-body')
   const rowElement = document.createElement('tr')
@@ -132,13 +132,30 @@ const generateRowTable = (bestMatch, attendTime) => {
   cellNumber.setAttribute('scope', 'row')
   const cellName = document.createElement('td')
   const cellAttendanceAt = document.createElement('td')
+  const cellActionBtn = document.createElement('td')
+  const deleteActionBtn = document.createElement('button')
+  const deleteIcon = document.createElement('i')
+
+  cellActionBtn.style = 'width: 10%'
+  deleteIcon.classList.add('fa', 'fa-trash')
+  deleteActionBtn.classList.add('delete-btn')
+  deleteActionBtn.appendChild(deleteIcon)
+  cellActionBtn.appendChild(deleteActionBtn)
+
   cellNumber.textContent = attendanceTableElement.rows.length
   cellName.textContent = bestMatch.label
   cellAttendanceAt.textContent = attendTime
+
   rowElement.appendChild(cellNumber)
   rowElement.appendChild(cellName)
   rowElement.appendChild(cellAttendanceAt)
+  rowElement.appendChild(cellActionBtn)
   attendanceTableBody.insertBefore(rowElement, attendanceTableBody.firstChild)
+
+  deleteActionBtn.addEventListener('click', () => {
+    attendanceTableBody.removeChild(rowElement)
+    attendanceHashTable.delete(bestMatch.label)
+  })
 }
 
 const drawFaceDetectionBox = (canvasElement, resizedDetection) => {

@@ -1,5 +1,5 @@
 class HashTable {
-  constructor(size = 53) {
+  constructor(size = 271) {
     this.keyMap = new Array(size)
   }
 
@@ -20,6 +20,10 @@ class HashTable {
       this.keyMap[index] = {}
     }
     this.keyMap[index] = { key, value: { ...value } }
+  }
+  delete(key) {
+    let index = this._hash(key)
+    if (this.keyMap[index]) this.keyMap[index] = null
   }
   search(key) {
     let index = this._hash(key)
