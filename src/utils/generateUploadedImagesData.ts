@@ -19,7 +19,7 @@ export const generateUploadedImagesData = async (dirPath: string): Promise<Uploa
     await loadModels()
     uploadedImagesData = await proccessImages(dirPath)
   } catch (e) {
-    console.error("We've thrown! Whoops!", e)
+    console.error('error has occurred :', e)
   } finally {
     return uploadedImagesData
   }
@@ -28,7 +28,7 @@ export const generateUploadedImagesData = async (dirPath: string): Promise<Uploa
 const loadModels = async () => {
   const MODELS_LOCATION = path.join(__dirname, '..', '..', 'models')
   await faceapi.nets.tinyFaceDetector.loadFromDisk(MODELS_LOCATION)
-  await faceapi.nets.ssdMobilenetv1.loadFromDisk(MODELS_LOCATION)
+  // await faceapi.nets.ssdMobilenetv1.loadFromDisk(MODELS_LOCATION)
   await faceapi.nets.faceLandmark68Net.loadFromDisk(MODELS_LOCATION)
   await faceapi.nets.faceRecognitionNet.loadFromDisk(MODELS_LOCATION)
 }
@@ -53,6 +53,7 @@ const proccessImages = async (dirPath: string): Promise<UploadedImageData[]> => 
       fileName: file,
       descriptor: Array.from(fullFaceDescription!.descriptor),
     })
+
   }
   return imagesData
 }

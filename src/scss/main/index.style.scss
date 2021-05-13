@@ -225,6 +225,7 @@ section.how-it-works-section {
       }
       .text-container {
         margin-bottom: 3rem;
+
         h3 {
           margin-bottom: 1.5rem;
           font-weight: 600;
@@ -237,6 +238,7 @@ section.how-it-works-section {
         }
         @include dekstop {
           max-width: 40%;
+          margin-bottom: unset;
         }
       }
     }

@@ -1,4 +1,3 @@
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 * {
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
@@ -37,6 +36,7 @@ a:hover {
 
 body {
   background: #f8f8f8;
+  height: 100%;
 }
 
 .loading-overlay {
@@ -68,7 +68,12 @@ body {
 }
 header {
   background-color: #4e69d0;
-  padding: 1rem;
+  padding: 1rem 3rem;
+}
+@media only screen and (min-width: 1024px) {
+  header {
+    padding: 1rem 7rem;
+  }
 }
 header .logo {
   display: block;
@@ -76,8 +81,6 @@ header .logo {
 }
 @media only screen and (min-width: 1024px) {
   header .logo {
-    margin-left: 1rem;
-    max-width: 134px;
     margin-bottom: unset;
   }
 }
@@ -164,6 +167,7 @@ main .attend .table-container {
 @media only screen and (min-width: 1024px) {
   main .attend .table-container {
     width: 50%;
+    margin-right: 100px;
     height: 58vh;
     align-self: flex-start;
   }
@@ -195,6 +199,7 @@ main .bottom #export-to-xlsx-btn:hover {
 }
 @media only screen and (min-width: 1024px) {
   main .bottom #export-to-xlsx-btn {
+    margin-right: 100px;
     width: unset;
   }
 }

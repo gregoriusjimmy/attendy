@@ -10,7 +10,6 @@ const VIEWS_DIR = path.join(__dirname, '/client/views')
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
 app.use(express.static(path.join(__dirname, 'client')))
 app.use('/models', express.static(path.join(__dirname, 'models')))
 
@@ -43,7 +42,6 @@ app.post('/upload-images/:dirName', async (req, res) => {
   uploadHandler(req, res, dirName)
   // TO DO : handle 404 failed process
   res.status(200).end()
-  // res.redirect(`/attend/${dirName}`)
 })
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}!`))
