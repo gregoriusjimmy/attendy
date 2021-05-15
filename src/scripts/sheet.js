@@ -1,8 +1,7 @@
-export const generateSheet = (data) => {
+export const generateSheet = (data, currentDate) => {
   const workBook = XLSX.utils.book_new()
-  console.log(data)
   workBook.Props = {
-    Title: '',
+    Title: 'Attendy-' + currentDate,
     Author: 'Attendy',
     CreatedDate: new Date(),
   }

@@ -54,27 +54,26 @@ const displayDetectionResult = async (videoElement, imagesData) => {
     clearCanvas(canvasElement)
     if (detection) {
       const bestMatch = faceMatcher.findBestMatch(detection.descriptor)
-      let currentBestMatchInTable = attendanceHashTable.search(bestMatch.label)
       if (bestMatch.label === 'unknown') return
       occurrence.push(bestMatch.label)
 
       // algorithm to handle detected face. to avoid detected face being attended
       // with a different person, we verify it by checking if the detected face was
       // detected at a given amount.
-      if (occurrence.length > maxOccurenceLength) {
-        if (isAllEqual(occurrence)) {
-          if (currentBestMatchInTable) {
-            if (currentBestMatchInTable.value < bestMatch.distance) {
-              attendanceHashTable.add(bestMatch.label, { distance: bestMatch.distance })
-            }
-          } else {
-            const attendTime = new Date().toLocaleTimeString([], { hour12: false })
-            attendanceHashTable.add(bestMatch.label, {
-              distance: bestMatch.distance,
-              time: attendTime,
-            })
-            generateRowTable(bestMatch, attendTime, attendanceHashTable)
-          }
+      if (occurrence.length > maxOccurenceLength && isAllEqual(occurrence)) {
+        const currentBestMatchInTable = attendanceHashTable.search(bestMatch.label)
+        if (
+          currentBestMatchInTable &&
+          currentBestMatchInTable.value.distance > bestMatch.distance
+        ) {
+          attendanceHashTable.add(bestMatch.label, { distance: bestMatch.distance })
+        } else {
+          const attendTime = new Date().toLocaleTimeString([], { hour12: false })
+          attendanceHashTable.add(bestMatch.label, {
+            distance: bestMatch.distance,
+            time: attendTime,
+          })
+          generateRowTable(bestMatch, attendTime, attendanceHashTable)
         }
         occurrence = []
       }
@@ -103,10 +102,17 @@ const exportToXlsx = (attendanceHashTable) => {
     convertedTableDataToObj.push({
       Name: tableData[i]['key'],
       'Attend at': tableData[i]['value'].time,
+      Confidence: 1 - tableData[i]['value'].distance.toFixed(2),
     })
   }
-  const workBook = generateSheet(convertedTableDataToObj)
-  saveAs(new Blob([s2ab(workBook)], { type: 'application/octet-stream' }), 'attend.xlsx')
+  const currentDate = new Date()
+  const formatedCurrentDate =
+    currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear()
+  const workBook = generateSheet(convertedTableDataToObj, formatedCurrentDate)
+  saveAs(
+    new Blob([s2ab(workBook)], { type: 'application/octet-stream' }),
+    `Attendy-${formatedCurrentDate}.xlsx`
+  )
 }
 
 const detectFaceCamera = async (videoElement) => {
