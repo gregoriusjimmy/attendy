@@ -56,7 +56,7 @@ section.hero-section .logo {
 }
 @media only screen and (min-width: 1024px) {
   section.hero-section .logo {
-    max-width: 134px;
+    max-width: 148px;
     margin-bottom: unset;
   }
 }

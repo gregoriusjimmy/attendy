@@ -3,7 +3,7 @@
 @import '../base/variables';
 
 body {
-  background: #f8f8f8;
+  background: $bg-grey;
   height: 100%;
 }
 
@@ -44,7 +44,7 @@ header {
   }
   .logo {
     display: block;
-    max-width: 100px;
+    max-width: 148px;
 
     @include dekstop {
       margin-bottom: unset;
@@ -126,7 +126,7 @@ main {
 
       #attendance-table {
         .delete-btn {
-          background-color: #f8f8f8;
+          background-color: $bg-grey;
           border: none; /* Remove borders */
           padding: 0 6px;
           font-size: 1rem; /* Set a font size */
@@ -148,7 +148,7 @@ main {
       font-weight: 600;
 
       &:hover {
-        background-color: #e82343;
+        background-color: $secondary-color-dark;
       }
       @include dekstop {
         margin-right: 100px;

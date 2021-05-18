@@ -11,20 +11,22 @@ class HashTable {
       let value = char.charCodeAt(0) - 96
       total = (total * WEIRD_PRIME + value) % this.keyMap.length
     }
-    return total
+    return Math.abs(total)
   }
+
   add(key, value) {
     let index = this._hash(key)
-
     if (!this.keyMap[index]) {
       this.keyMap[index] = {}
     }
-    this.keyMap[index] = { key, value: { ...value } }
+    this.keyMap[index] = { key, value }
   }
+
   delete(key) {
     let index = this._hash(key)
     if (this.keyMap[index]) this.keyMap[index] = null
   }
+
   search(key) {
     let index = this._hash(key)
     if (this.keyMap[index]) {
@@ -32,6 +34,7 @@ class HashTable {
     }
     return undefined
   }
+
   getKeys() {
     let keysArr = []
     for (let i = 0; i < this.keyMap.length; i++) {
@@ -41,6 +44,7 @@ class HashTable {
     }
     return keysArr
   }
+
   getValues() {
     let valuesArr = []
     for (let i = 0; i < this.keyMap.length; i++) {
@@ -50,6 +54,7 @@ class HashTable {
     }
     return valuesArr
   }
+
   getTable() {
     let table = []
     for (let i = 0; i < this.keyMap.length; i++) {

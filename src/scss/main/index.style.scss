@@ -1,5 +1,4 @@
 // Imports
-//
 @import '../base/mixins';
 @import '../base/reset';
 @import '../base/variables';
@@ -22,7 +21,7 @@ section.hero-section {
     max-width: 100px;
     margin-bottom: 1rem;
     @include dekstop {
-      max-width: 134px;
+      max-width: 148px;
       margin-bottom: unset;
     }
   }
@@ -102,7 +101,7 @@ section.hero-section {
             font-weight: 600;
 
             &:hover {
-              background-color: #e82343;
+              background-color: $secondary-color-dark;
             }
             @include dekstop {
               width: unset;
@@ -128,7 +127,7 @@ section.hero-section {
 }
 
 section.upload-section {
-  background-color: #f8f8f8;
+  background-color: $bg-grey;
   .container {
     padding: 2rem 0 4rem 0;
     text-align: center;
@@ -167,7 +166,7 @@ section.upload-section {
 
         font-weight: 600;
         &:hover {
-          background-color: #e82343;
+          background-color: $secondary-color-dark;
         }
         @include dekstop {
           margin-bottom: unset;

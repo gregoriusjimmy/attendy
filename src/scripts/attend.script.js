@@ -60,24 +60,29 @@ const displayDetectionResult = async (videoElement, imagesData) => {
       // algorithm to handle detected face. to avoid detected face being attended
       // with a different person, we verify it by checking if the detected face was
       // detected at a given amount.
-      if (occurrence.length > maxOccurenceLength && isAllEqual(occurrence)) {
-        const currentBestMatchInTable = attendanceHashTable.search(bestMatch.label)
-        if (
-          currentBestMatchInTable &&
-          currentBestMatchInTable.value.distance > bestMatch.distance
-        ) {
-          attendanceHashTable.add(bestMatch.label, { distance: bestMatch.distance })
-        } else {
-          const attendTime = new Date().toLocaleTimeString([], { hour12: false })
-          attendanceHashTable.add(bestMatch.label, {
-            distance: bestMatch.distance,
-            time: attendTime,
-          })
-          generateRowTable(bestMatch, attendTime, attendanceHashTable)
+      if (occurrence.length > maxOccurenceLength) {
+        if (isAllEqual(occurrence)) {
+          const currentBestMatchInTable = attendanceHashTable.search(bestMatch.label)
+          if (currentBestMatchInTable) {
+            if (currentBestMatchInTable.value.distance > bestMatch.distance) {
+              attendanceHashTable.add(bestMatch.label, {
+                time: currentBestMatchInTable.value.time,
+                distance: bestMatch.distance,
+              })
+            }
+          } else {
+            const attendTime = new Date().toLocaleTimeString([], {
+              hour12: false,
+            })
+            attendanceHashTable.add(bestMatch.label, {
+              time: attendTime,
+              distance: bestMatch.distance,
+            })
+            generateRowTable(bestMatch, attendTime, attendanceHashTable)
+          }
         }
         occurrence = []
       }
-
       const resizedDetection = faceapi.resizeResults(detection, displaySize)
       drawFaceDetectionBox(canvasElement, resizedDetection)
       drawDetectionNameLabel(canvasElement, displaySize, bestMatch.toString())
