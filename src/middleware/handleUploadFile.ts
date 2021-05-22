@@ -11,7 +11,6 @@ export const uploadHandler = (req: Request, res: Response, newDirName: string) =
     } else if (err) {
       console.error(err)
     }
-    // const files = req.files
   })
 }
 

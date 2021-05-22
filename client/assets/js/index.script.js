@@ -22,6 +22,7 @@ showAttendBtn = () => {
   const attendBtn = document.getElementById('redirect')
   attendBtn.classList.remove('hidden')
 }
+
 fetchGetDirName = async () => {
   const url = 'http://localhost:3000/api/getDirName'
   const response = await fetch(url)
