@@ -1,6 +1,6 @@
 import express from 'express'
 import path from 'path'
-import { generateUploadedImagesData } from './src/utils/generateUploadedImagesData'
+import { generateUploadedImagesDataWithErrors } from './src/utils/generateUploadedImagesData'
 import { uploadHandler } from './src/middleware/handleUploadFile'
 import { createDir, generateNewDirName } from './src/utils/createDir'
 
@@ -18,7 +18,7 @@ app.get('/', (req, res) => res.sendFile(path.join(VIEWS_DIR, 'index.html')))
 app.get('/api/attend/:dirName', (req, res) => {
   const dirName = req.params['dirName']
   const pathToDir = path.join(__dirname, 'uploads', dirName)
-  generateUploadedImagesData(pathToDir).then((data) => {
+  generateUploadedImagesDataWithErrors(pathToDir).then((data) => {
     // TO DO : Handle data
     res.json(data)
   })
@@ -27,7 +27,10 @@ app.get('/api/attend/:dirName', (req, res) => {
 app.get('/attend/:dirName', (req, res) => {
   const dirName = req.params['dirName']
   // TO DO : handle dirName not available
-  app.use('/' + dirName, express.static(path.join(__dirname, 'uploads', dirName)))
+  app.use(
+    '/' + dirName,
+    express.static(path.join(__dirname, 'uploads', dirName))
+  )
   res.sendFile(path.join(VIEWS_DIR, 'attend.html'))
 })
 

@@ -12,16 +12,22 @@ export interface UploadedImageData {
   fileName: string
   descriptor: number[]
 }
+export interface ProcessedImages {
+  imagesData: UploadedImageData[]
+  errors: string[] | null
+}
 
-export const generateUploadedImagesData = async (dirPath: string): Promise<UploadedImageData[]> => {
-  let uploadedImagesData: UploadedImageData[] = []
+export const generateUploadedImagesDataWithErrors = async (
+  dirPath: string
+): Promise<ProcessedImages | Object> => {
+  let processedImages: ProcessedImages | Object = {}
   try {
     await loadModels()
-    uploadedImagesData = await proccessImages(dirPath)
+    processedImages = await proccessImages(dirPath)
   } catch (e) {
     console.error('error has occurred :', e)
   } finally {
-    return uploadedImagesData
+    return processedImages
   }
 }
 
@@ -32,8 +38,9 @@ const loadModels = async () => {
   await faceapi.nets.faceRecognitionNet.loadFromDisk(MODELS_LOCATION)
 }
 
-const proccessImages = async (dirPath: string): Promise<UploadedImageData[]> => {
+const proccessImages = async (dirPath: string): Promise<ProcessedImages> => {
   let imagesData: UploadedImageData[] = []
+  let faceNotDetectedFileNames: Array<string> = []
   const files = await readdir(dirPath)
   for (const file of files) {
     const image = await canvas.loadImage(`${dirPath}/${file}`)
@@ -47,12 +54,16 @@ const proccessImages = async (dirPath: string): Promise<UploadedImageData[]> => 
     // descriptor from faceapi return a Float32Array, we want to send the descriptor
     // to the client through json but json doesn't understrand Float32Array. So we
     // convert it to Array then convert it back to Float32Array in the client.
-    imagesData.push({
-      label: label,
-      fileName: file,
-      descriptor: Array.from(fullFaceDescription!.descriptor),
-    })
-
+    if (fullFaceDescription) {
+      imagesData.push({
+        label: label,
+        fileName: file,
+        descriptor: Array.from(fullFaceDescription!.descriptor),
+      })
+    } else {
+      faceNotDetectedFileNames.push(file)
+    }
   }
-  return imagesData
+
+  return { imagesData, errors: faceNotDetectedFileNames }
 }

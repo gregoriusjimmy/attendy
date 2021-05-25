@@ -5,7 +5,16 @@ const runAttend = async () => {
   const params = window.location.href.split('/')
   const id = params[params.length - 1]
   await loadModels()
-  getImagesData(id).then((imagesData) => {
+  getImagesData(id).then(({ imagesData, errors }) => {
+    if (errors) {
+      errors.forEach((fileName) => {
+        alert(
+          'Cannot detect face on file ' +
+            fileName +
+            ' please use another image.'
+        )
+      })
+    }
     startVideo()
     video.addEventListener('play', async () => {
       displayDetectionResult(video, imagesData)
@@ -40,14 +49,19 @@ const displayDetectionResult = async (videoElement, imagesData) => {
   const displaySize = { width: videoElement.width, height: videoElement.height }
   const labeledDescriptors = generateLabeledDescriptors(imagesData)
   const maxDescriptorDistance = 0.6
-  const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, maxDescriptorDistance)
+  const faceMatcher = new faceapi.FaceMatcher(
+    labeledDescriptors,
+    maxDescriptorDistance
+  )
   faceapi.matchDimensions(canvasElement, displaySize)
   const attendanceHashTable = new HashTable()
   const maxOccurenceLength = 5
   let occurrence = []
 
   const exportXlsxBtn = document.getElementById('export-to-xlsx-btn')
-  exportXlsxBtn.addEventListener('click', () => exportToXlsx(attendanceHashTable))
+  exportXlsxBtn.addEventListener('click', () =>
+    exportToXlsx(attendanceHashTable)
+  )
 
   setInterval(async () => {
     const detection = await detectFaceCamera(videoElement)
@@ -62,7 +76,9 @@ const displayDetectionResult = async (videoElement, imagesData) => {
       // detected at a given amount.
       if (occurrence.length > maxOccurenceLength) {
         if (isAllEqual(occurrence)) {
-          const currentBestMatchInTable = attendanceHashTable.search(bestMatch.label)
+          const currentBestMatchInTable = attendanceHashTable.search(
+            bestMatch.label
+          )
           if (currentBestMatchInTable) {
             if (currentBestMatchInTable.value.distance > bestMatch.distance) {
               attendanceHashTable.add(bestMatch.label, {
@@ -94,7 +110,9 @@ const generateLabeledDescriptors = (imagesData) => {
   let labeledDescriptors = []
   for (const imageData of imagesData) {
     labeledDescriptors.push(
-      new faceapi.LabeledFaceDescriptors(imageData.label, [new Float32Array(imageData.descriptor)])
+      new faceapi.LabeledFaceDescriptors(imageData.label, [
+        new Float32Array(imageData.descriptor),
+      ])
     )
   }
   return labeledDescriptors
@@ -112,7 +130,11 @@ const exportToXlsx = (attendanceHashTable) => {
   }
   const currentDate = new Date()
   const formatedCurrentDate =
-    currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear()
+    currentDate.getDate() +
+    '/' +
+    (currentDate.getMonth() + 1) +
+    '/' +
+    currentDate.getFullYear()
   const workBook = generateSheet(convertedTableDataToObj, formatedCurrentDate)
   saveAs(
     new Blob([s2ab(workBook)], { type: 'application/octet-stream' }),
@@ -130,7 +152,9 @@ const detectFaceCamera = async (videoElement) => {
 }
 
 const clearCanvas = (canvasElement) => {
-  canvasElement.getContext('2d').clearRect(0, 0, canvasElement.width, canvasElement.height)
+  canvasElement
+    .getContext('2d')
+    .clearRect(0, 0, canvasElement.width, canvasElement.height)
 }
 
 const isAllEqual = (arr) => arr.every((val) => val === arr[0])
@@ -175,7 +199,10 @@ const drawFaceDetectionBox = (canvasElement, resizedDetection) => {
     boxColor: '#FEA501',
     lineWidth: 2,
   }
-  const drawBox = new faceapi.draw.DrawBox(resizedDetection.detection.box, boxDrawOptions)
+  const drawBox = new faceapi.draw.DrawBox(
+    resizedDetection.detection.box,
+    boxDrawOptions
+  )
   drawBox.draw(canvasElement)
 }
 
@@ -188,7 +215,11 @@ const drawDetectionNameLabel = (canvasElement, displaySize, label) => {
     fontColor: 'white',
     padding: 16,
   }
-  const drawTextField = new faceapi.draw.DrawTextField([label], anchor, labelDrawOptions)
+  const drawTextField = new faceapi.draw.DrawTextField(
+    [label],
+    anchor,
+    labelDrawOptions
+  )
   drawTextField.draw(canvasElement)
 }
 
