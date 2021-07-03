@@ -114,8 +114,6 @@ main {
       }
     }
     .table-container {
-      display: flex;
-      justify-content: center;
       height: 200px;
       @include dekstop {
         width: 50%;
